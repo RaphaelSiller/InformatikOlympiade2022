@@ -37,41 +37,27 @@ int main() {
 
 
 
+#include <vector>
+static std::vector<std::vector<int>> cestini;
+static std::vector<int> highestObject;
 
-static int cestini[10][10];
-static int highestObject[10];
-
+//N = Objects
+//M = Baskets
 void inizia(int N, int M) {
-	//Defining space
-	for (int i = 0; i < M; i++) {
-		for (int j = 0; j < N; j++) {
-			cestini[M][N] = -1;
-		}
-	}
-	//Defining Index of highestObject
-	highestObject[0] = N-1;
-	for (int i = 1; i < M; i++) {
-		highestObject[i] = -1;
-	}
-	
-	//Filling with objects
+	cestini.assign(M, {});
 	for (int i = 0; i < N; i++) {
-		cestini[0][i] = i;
+		cestini[0].push_back(i);
 	}
 }
 
 void sposta(int a, int b) {
-	int indexToBePlaced = (highestObject[b]<0) ? 0 : highestObject[b]+1;
-    cestini[b][indexToBePlaced] = cestini[a][highestObject[a]];
-	cestini[a][highestObject[a]] = -1;
-	highestObject[a]--;
-    highestObject[b]++;
+	cestini[b].push_back(cestini[a][cestini[a].size() -1]);
+	cestini[a].pop_back();
 }
 
 int controlla(int a, int i) {
-	if (i <= highestObject[a] ) {
-		return cestini[a][i];
-	} else {
+	if (cestini[a].size() < i+1)
 		return -1;
-	}
+	else
+		return cestini[a][i];
 }
