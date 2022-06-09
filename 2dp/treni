@@ -1,0 +1,28 @@
+
+/**
+ * @brief 
+ * 
+ * @param N number of trains
+ * @param A SuperFastTravel always usable 
+ * @param B only if train wasn't used before
+ * @return int 
+ */
+long long tempo_massimo(int N, int A[], int B[]) {
+	if (N == 1) return A[0] >= B[0] ? A[0] : B[0]; //When only one day is
+
+	long long maxTime = 0;
+	if(A[0] >= B[0])
+		maxTime = A[0];
+	else
+		maxTime = B[0];
+
+	for (int i = 1; i < N; i++) {
+		if(A[i] + A[i+1] >= B[i+1] && i < N) { //When SuperTrain is better
+			maxTime += A[i];
+		} else {
+			maxTime += B[i+1];
+			i++;
+		}
+	}
+	return maxTime;
+}
