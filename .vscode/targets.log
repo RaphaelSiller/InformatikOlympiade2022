@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon May 16 16:36:36 2022
+# Make data base, printed on Fri Jun 10 15:44:11 2022
 
 # Variables
 
@@ -61,6 +61,8 @@ GIO_LAUNCHED_DESKTOP_FILE = /usr/share/applications/code.desktop
 # 'override' directive
 GNUMAKEFLAGS := 
 # environment
+MANDATORY_PATH = /usr/share/gconf/cinnamon.mandatory.path
+# environment
 XDG_DATA_DIRS = /usr/share/cinnamon:/usr/share/gnome:/home/endroid/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share:/var/lib/snapd/desktop
 # environment
 DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
@@ -83,7 +85,7 @@ GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
 GJS_DEBUG_OUTPUT = stderr
 # environment
-SESSION_MANAGER = local/LinuxPredator:@/tmp/.ICE-unix/1240,unix/LinuxPredator:/tmp/.ICE-unix/1240
+SESSION_MANAGER = local/LinuxPredator:@/tmp/.ICE-unix/1286,unix/LinuxPredator:/tmp/.ICE-unix/1286
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -101,7 +103,7 @@ XDG_SESSION_DESKTOP = cinnamon
 # environment
 SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 16488
+GIO_LAUNCHED_DESKTOP_FILE_PID = 15185
 # automatic
 %F = $(notdir $%)
 # environment
@@ -117,7 +119,7 @@ QT_QPA_PLATFORMTHEME = qt5ct
 # environment
 XDG_SEAT = seat0
 # environment
-SSH_AGENT_PID = 1312
+SSH_AGENT_PID = 1359
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = X-Cinnamon
 # environment
@@ -129,7 +131,7 @@ HOME = /home/endroid
 # environment
 LESSCLOSE = /usr/bin/lesspipe %s %s
 # environment
-VSCODE_CODE_CACHE_PATH = /home/endroid/.config/Code/CachedData/da15b6fd3ef856477bf6f4fb29ba1b7af717770d
+VSCODE_CODE_CACHE_PATH = /home/endroid/.config/Code/CachedData/4af164ea3a06f701fe3e89a2bcbb421d2026b68f
 # environment
 LOGNAME = endroid
 # environment
@@ -153,7 +155,7 @@ MAKECMDGOALS := all
 # environment
 SHLVL = 0
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-dd9e2516-bcb0-4eab-8e6c-3b88f7604b1e.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-a989d196-4cc7-40bf-aa8c-b5f3d285fdba.sock
 # environment
 XDG_SESSION_ID = c1
 # environment
@@ -179,7 +181,7 @@ LANGUAGE = en_US
 # environment
 XDG_SEAT_PATH = /org/freedesktop/DisplayManager/Seat0
 # environment
-VSCODE_IPC_HOOK = /run/user/1000/vscode-ffd56775-1.67.1-main.sock
+VSCODE_IPC_HOOK = /run/user/1000/vscode-ffd56775-1.68.0-main.sock
 # makefile
 MAKEFLAGS = pqrR
 # environment
@@ -196,6 +198,8 @@ LC_PAPER = it_IT.UTF-8
 CINNAMON_VERSION = 5.2.7
 # environment
 QT_ACCESSIBILITY = 1
+# environment
+DEFAULTS_PATH = /usr/share/gconf/cinnamon.default.path
 # default
 MAKEFILES := 
 # environment
@@ -225,9 +229,9 @@ LC_ADDRESS = it_IT.UTF-8
 # environment
 LANG = C
 # environment
-VSCODE_PID = 16488
+VSCODE_PID = 15185
 # variable set hash-table stats:
-# Load=107/1024=10%, Rehash=0, Collisions=10/129=8%
+# Load=109/1024=11%, Rehash=0, Collisions=10/131=8%
 
 # Pattern-specific Variable Values
 
@@ -235,9 +239,9 @@ VSCODE_PID = 16488
 
 # Directories
 
-# . (device 66311, inode 10227715): 11 files, no impossibilities.
+# . (device 66311, inode 10227715): 12 files, no impossibilities.
 
-# 11 files, no impossibilities in 1 directories.
+# 12 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -277,6 +281,7 @@ GNUmakefile:
 #  Implicit rule search has been done.
 #  File does not exist.
 #  File has been updated.
+ 
 #  Failed to be updated.
 
 # files hash-table stats:
@@ -287,13 +292,12 @@ GNUmakefile:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 19 / storage = 147 B / avg = 7 B
-# current buf: size = 8162 B / used = 147 B / count = 19 / avg = 7 B
- 
+# strcache buffers: 1 (0) / strings = 20 / storage = 151 B / avg = 7 B
+# current buf: size = 8162 B / used = 151 B / count = 20 / avg = 7 B
 
-# strcache performance: lookups = 22 / hit rate = 13%
+# strcache performance: lookups = 23 / hit rate = 13%
 # hash-table stats:
-# Load=19/8192=0%, Rehash=0, Collisions=1/22=5%
-# Finished Make data base on Mon May 16 16:36:36 2022
+# Load=20/8192=0%, Rehash=0, Collisions=1/23=4%
+# Finished Make data base on Fri Jun 10 15:44:11 2022
 
  
