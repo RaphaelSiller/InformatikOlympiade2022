@@ -13,6 +13,7 @@ static char* plaintext;
 
 // Declaring functions
 void decifra(int N, int d, int L, int* messaggio, char* plaintext);
+long long fastModularExponentation( int C, int a, int n);
 
 int main() {
 	fr = stdin;
@@ -38,46 +39,33 @@ int main() {
 	return 0;
 }
 
-// int fastModularExponentation(int N, int d) {
-// 	if(d > 0) {
-// 		if (d % 2) { //
-// 			return N * fastModularExponentation(N, d-1);
-// 		} else {
-// 			int l = fastModularExponentation(N, d/2);
-// 			return l*l;
-// 		}
-		
-// 	} else { //Exit
-// 		return 1;
-// 	}
-// }
-
-#include <vector>
 void decifra(int N, int d, int L, int* messaggio, char* plaintext) {
 	for (int i = 0; i < L; i++) {
-		// plaintext[i] = fastModularExponentation(N, d);
-		int modulo = N;
-		std::vector<bool> isHalvedOrMinusOne;
-		int indexOfHalved = 0;
-		int dClone = d;
-		while (dClone > 0) {
-			if (dClone % 2)
-			{
-				isHalvedOrMinusOne.insert(isHalvedOrMinusOne.begin(), false);
-				dClone--;
-			} else {
-				isHalvedOrMinusOne.insert(isHalvedOrMinusOne.begin(), true);
-				dClone/=2;
-			}
-		}
-		
-		for (int j = 0; j < isHalvedOrMinusOne.size(); j++) {
-			if (isHalvedOrMinusOne[j]) {
-				modulo = (modulo * modulo) % d;
-			} else {
-				modulo = (N * modulo) % d;
-			}
-		}
-		plaintext[i] = modulo;
+	plaintext[i] = fastModularExponentation(N, messaggio[i], d);
 	}
+}
+
+/**
+ * @brief uses following formula:
+ * 	
+ * 	a^(2n+1) %C = a * (a^2n) %C		and
+ *  a^2n %C = (a^n)^2 %C
+ * 
+ * @param C 
+ * @param a 
+ * @param n 
+ * @return long long 
+ */
+long long fastModularExponentation( int C, int a, int n) {
+	if (n==0) // n pow 0 = 1
+		return 1; 
+	
+	if(n==1)
+		return a%C; // n pow 1 = n
+
+	long long half = fastModularExponentation(C, a, n/2);
+	long long ret = (half * half) % C;
+	if(n%2)
+		ret = (ret*a)%C;
+	return ret;
 }

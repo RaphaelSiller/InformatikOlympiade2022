@@ -1,6 +1,8 @@
+#include <bits/stdc++.h>
 #include <stdio.h>
-#include <assert.h>
-#include <stdlib.h>
+using namespace std;
+
+#define n 1000
 
 static FILE *fr, *fw;
 
@@ -10,12 +12,44 @@ static long long M;
 static int* V;
 static int B;
 
-// Declaring functions
-int quadri(int N, long long M, int* V);
+int quadri(int N, long long M, int V[]);
+
+int quadri(int N, long long M, int V[]) {
+    int a = 0,biggestPossibleGroup = N;
+    int massimo = 0;
+    while (a<=biggestPossibleGroup) {
+        int range = (a+biggestPossibleGroup)/2;
+        bool controllo = true;
+        long long int somma = 0;
+        for(int i = 0; i < range; i++) {
+            somma+=V[i];
+        }
+
+        if(somma > M) 
+			controllo = false;
+		
+		for(int i = range; i < N; i++) {
+			somma-=V[i-range];
+			somma+=V[i];
+			if(somma > M) 
+				controllo = false;
+		}
+
+        if(controllo) {
+           massimo = max(range,massimo);
+           a = range+1;
+        }
+
+        else {
+            biggestPossibleGroup = range-1;
+        }
+    }
+    return massimo;
+}
 
 int main() {
-	fr = fopen("input.txt", "r");
-	fw = fopen("output.txt", "w");
+	fr = stdin;
+	fw = stdout;
 
 	// Iterators used in for loops
 	int i0;
@@ -36,26 +70,4 @@ int main() {
 	fclose(fr);
 	fclose(fw);
 	return 0;
-}
-
-int quadri(int N, long long M, int V[]) {
-    int B = 0;
-    bool isUnderLimit = true;
-    while (isUnderLimit && B <= N) {
-        //Cycle through every starting point
-        for (int i = 0; i <= N-B; i++) {
-            //Count all prices
-            long long somma = 0;
-            for (int j = 0; j < B; j++) {
-                somma += V[i+j];
-            }
-            if(somma > M) {
-                isUnderLimit = false;
-                i = N+1;
-				B--;
-            }
-        }
-        B++;
-    }
-    return B;
 }
