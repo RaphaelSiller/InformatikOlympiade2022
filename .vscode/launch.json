@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/endroidmc/Documents/Schule/3Klasse/InfoOlympiade/ProbeLaufTerritorial/AlgoBadge/2grafi/mincammino",
-      "program": "/home/endroidmc/Documents/Schule/3Klasse/InfoOlympiade/ProbeLaufTerritorial/AlgoBadge/2grafi/mincammino/build/Debug/outDebug",
+      "cwd": "/home/endroid/Documents/SauceCode/InformatikOlympiade2022/2dp",
+      "program": "/home/endroid/Documents/SauceCode/InformatikOlympiade2022/2dp/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
