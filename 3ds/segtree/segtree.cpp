@@ -3,8 +3,17 @@
 
 using namespace std;
 
+typedef struct segment_s {
+	struct segment_s *segl;
+	struct segment_s *segr;
+	int xl;
+	int xr;
+	long long value;
+} segment;
+
 void init(vector<long long> a);
 long long get_sum(int l, int r);
+long long get_sum(int l, int r, segment *seg);
 void add(int l, int r, long long x);
 void set_range(int l, int r, long long x);
 long long get_min(int l, int r);
@@ -22,13 +31,7 @@ int lower_bound(int l, int r, long long x);
 
 #include <vector>
 
-typedef struct segment_s {
-	struct segment_s *segl;
-	struct segment_s *segr;
-	int xl;
-	int xr;
-	long long value;
-} segment;
+
 
 std::vector<std::vector<segment>> tree;
 
@@ -53,7 +56,8 @@ void init(std::vector<long long> a) {
 		int aofijhof = tree[0].size();
 		newLevel.clear();
 		for (int i = 0; i < tree[0].size(); i+=2) {
-			segment node = {&tree[0][i], &tree[0][i+1], tree[0][i].xl, tree[0][i+1].xr, tree[0][i].value + tree[0][i+1].value};
+			int xr = tree[0][i+1].xr >= 0 ? tree[0][i+1].xr : tree[0][i].xr;
+			segment node = {&tree[0][i], &tree[0][i+1], tree[0][i].xl, xr, tree[0][i].value + tree[0][i+1].value};
 			newLevel.push_back(node);
 		}
 		
@@ -68,12 +72,24 @@ void init(std::vector<long long> a) {
 }
 
 long long get_sum(int l, int r) {
-	long long ret = 0;
-	return 42;
+	
+	return get_sum(l, r, &tree[0][0]);
 }
+
+long long get_sum(int l, int r, segment *seg) {
+	if (l <= seg->xl && r > seg->xr) //If completely within, return node value
+		return seg->value;
+
+	if (l > seg->xr || r <= seg->xl) //if completely outside, return 0
+		return 0;
+
+	return get_sum(l, r, seg->segl) + get_sum(l, r, seg->segr); //Continue to go deeper
+}
+
 void add(int l, int r, long long x) {
 
 }
+
 void set_range(int l, int r, long long x) {
 
 }
