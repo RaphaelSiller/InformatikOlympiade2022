@@ -9,7 +9,7 @@ typedef struct segment_s {
 	int xl;
 	int xr;
 	long long value;
-	long long maxValue; //TODO implement maxValue
+	long long minValue;
 } segment;
 
 void init(vector<long long> a);
@@ -18,6 +18,7 @@ long long get_sum(int l, int r, segment *seg);
 void add(int l, int r, long long x);
 void set_range(int l, int r, long long x);
 long long get_min(int l, int r);
+long long get_min(int l, int r, segment *seg);
 int lower_bound(int l, int r, long long x);
 
 
@@ -47,7 +48,7 @@ void init(std::vector<long long> a) {
 	}
 
 	if (newLevel.size() % 2) { //if odd  number of nodes in this level, add empty node
-		segment node = {nullptr, nullptr, dataSize, dataSize, 0, INT32_MIN};
+		segment node = {nullptr, nullptr, dataSize, dataSize, 0, INT32_MAX};
 		newLevel.push_back(node);
 	}
 	
@@ -59,13 +60,13 @@ void init(std::vector<long long> a) {
 		newLevel.clear();
 		for (int i = 0; i < tree[0].size(); i+=2) {
 			int xr = tree[0][i+1].xr >= 0 ? tree[0][i+1].xr : tree[0][i].xr;
-			int maxValue = tree[0][i].maxValue > tree[0][i+1].maxValue ? tree[0][i].maxValue : tree[0][i+1].maxValue;
+			int maxValue = tree[0][i].minValue < tree[0][i+1].minValue ? tree[0][i].minValue : tree[0][i+1].minValue;
 			segment node = {&tree[0][i], &tree[0][i+1], tree[0][i].xl, xr, tree[0][i].value + tree[0][i+1].value, maxValue};
 			newLevel.push_back(node);
 		}
 		
 		if (newLevel.size() % 2 && tree[0].size() > 2) { //if odd  number of nodes in this level, add empty node
-			segment node = {nullptr, nullptr, -1, -1, 0, INT32_MIN};
+			segment node = {nullptr, nullptr, -1, -1, 0, INT32_MAX};
 			newLevel.push_back(node);
 		}
 		// printf("Debugpoint");
@@ -96,9 +97,24 @@ void add(int l, int r, long long x) {
 void set_range(int l, int r, long long x) {
 
 }
+
 long long get_min(int l, int r) {
-	return 42;
+	return get_min(l, r, &tree[0][0]);
 }
+
+long long get_min(int l, int r, segment *seg) {
+	if (l <= seg->xl && r > seg->xr) //If completely within, return node value
+		return seg->minValue;
+
+	if (l > seg->xr || r <= seg->xl) //if completely outside, return 0
+		return INT32_MAX;
+
+	//Continue to go deeper
+	int minValueL = get_min(l, r, seg->segl);
+	int minValueR = get_min(l, r, seg->segr);
+	return minValueL < minValueR ? minValueL : minValueR;
+}
+
 int lower_bound(int l, int r, long long x) {
 	return 42;
 }
