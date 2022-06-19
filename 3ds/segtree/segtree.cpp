@@ -13,12 +13,23 @@ typedef struct segment_s {
 } segment;
 
 void init(vector<long long> a);
+
+//Denoted by op = 1
 long long get_sum(int l, int r);
 long long get_sum(int l, int r, segment *seg);
+
+//Denoted by op = 2
 void add(int l, int r, long long x);
+void add(int l, int r, long long x, segment *seg);
+
+//Denoted by op = 3
 void set_range(int l, int r, long long x);
+
+//Denoted by op = 4
 long long get_min(int l, int r);
 long long get_min(int l, int r, segment *seg);
+
+//Denoted by op = 5
 int lower_bound(int l, int r, long long x);
 
 
@@ -91,7 +102,24 @@ long long get_sum(int l, int r, segment *seg) {
 }
 
 void add(int l, int r, long long x) {
+	add(l, r, x, &tree[0][0]);
+}
 
+void add(int l, int r, long long x, segment *seg) {
+	if (!(l > seg->xr || r <= seg->xl)) { // if there's something to change
+		if(seg->xl == seg->xr) { // if on last Level
+			seg->value += x;
+			seg->minValue = seg->value;
+		} else { //Else go deeper
+
+			add(l, r, x, seg->segl);
+			add(l, r, x, seg->segr);
+
+			seg->minValue = seg->segl->minValue < seg->segr->minValue ? seg->segl->minValue : seg->segr->minValue;
+			seg->value = seg->segl->value + seg->segr->value;
+		}
+	}
+	
 }
 
 void set_range(int l, int r, long long x) {
