@@ -9,6 +9,7 @@ typedef struct segment_s {
 	int xl;
 	int xr;
 	long long value;
+	long long maxValue; //TODO implement maxValue
 } segment;
 
 void init(vector<long long> a);
@@ -41,28 +42,30 @@ void init(std::vector<long long> a) {
 	//add first level
 	std::vector<segment> newLevel;
 	for (int i = 0; i < dataSize; i++) {
-		segment node = {nullptr, nullptr, i, i, a[i]};
+		segment node = {nullptr, nullptr, i, i, a[i], a[i]};
 		newLevel.push_back(node);
 	}
 
 	if (newLevel.size() % 2) { //if odd  number of nodes in this level, add empty node
-		segment node = {nullptr, nullptr, dataSize, dataSize, 0};
+		segment node = {nullptr, nullptr, dataSize, dataSize, 0, INT32_MIN};
 		newLevel.push_back(node);
 	}
 	
 	tree.push_back(newLevel);
 
+	//Construct the remaining levels
 	while (tree[0].size() > 1) { //While root hasn't been reached
 		int aofijhof = tree[0].size();
 		newLevel.clear();
 		for (int i = 0; i < tree[0].size(); i+=2) {
 			int xr = tree[0][i+1].xr >= 0 ? tree[0][i+1].xr : tree[0][i].xr;
-			segment node = {&tree[0][i], &tree[0][i+1], tree[0][i].xl, xr, tree[0][i].value + tree[0][i+1].value};
+			int maxValue = tree[0][i].maxValue > tree[0][i+1].maxValue ? tree[0][i].maxValue : tree[0][i+1].maxValue;
+			segment node = {&tree[0][i], &tree[0][i+1], tree[0][i].xl, xr, tree[0][i].value + tree[0][i+1].value, maxValue};
 			newLevel.push_back(node);
 		}
 		
 		if (newLevel.size() % 2 && tree[0].size() > 2) { //if odd  number of nodes in this level, add empty node
-			segment node = {nullptr, nullptr, -1, -1, 0};
+			segment node = {nullptr, nullptr, -1, -1, 0, INT32_MIN};
 			newLevel.push_back(node);
 		}
 		// printf("Debugpoint");
