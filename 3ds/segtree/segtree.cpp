@@ -32,23 +32,11 @@ long long get_min(int l, int r, segment *seg);
 
 //Denoted by op = 5
 int lower_bound(int l, int r, long long x);
-
-
-
-
-
-
-
-
-
-
+int lower_bound(int l, int r, long long x, segment *seg);
 
 #include <vector>
 
-
-
 std::vector<std::vector<segment>> tree;
-
 
 void init(std::vector<long long> a) {
 	int dataSize = a.size();
@@ -169,10 +157,23 @@ long long get_min(int l, int r, segment *seg) {
 }
 
 int lower_bound(int l, int r, long long x) {
-	return 42;
+		return lower_bound(l, r, x, &tree[0][0]);
 }
 
+int lower_bound(int l, int r, long long x, segment *seg) {
+	if (l > seg->xr || r <= seg->xl) //if completely outside, return -1
+		return -1;
+	
+	if (seg->xl == seg->xr) //If leaf node return index
+		return seg->xl;
+	
+	int ret;
+	if(seg->segl->minValue < x && (ret = lower_bound(l, r, x, seg->segl)) >= 0 ) //if left segment is correct
+		return ret;
+	else
+		return seg->segr->minValue < x ? lower_bound(l, r, x, seg->segr) : -1;
 
+}
 
 
 
