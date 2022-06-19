@@ -3,9 +3,9 @@
 
 using namespace std;
 
-typedef struct segment_s {
-	struct segment_s *segl;
-	struct segment_s *segr;
+typedef struct node_s {
+	struct node_s *nodel;
+	struct node_s *noder;
 	int xl;
 	int xr;
 	long long value;
@@ -34,9 +34,20 @@ long long get_min(int l, int r, segment *seg);
 int lower_bound(int l, int r, long long x);
 int lower_bound(int l, int r, long long x, segment *seg);
 
+
+
+
+
+
+
+
+
+
 #include <vector>
 
+
 std::vector<std::vector<segment>> tree;
+
 
 void init(std::vector<long long> a) {
 	int dataSize = a.size();
@@ -87,7 +98,7 @@ long long get_sum(int l, int r, segment *seg) {
 	if (l > seg->xr || r <= seg->xl) //if completely outside, return 0
 		return 0;
 
-	return get_sum(l, r, seg->segl) + get_sum(l, r, seg->segr); //Continue to go deeper
+	return get_sum(l, r, seg->nodel) + get_sum(l, r, seg->noder); //Continue to go deeper
 }
 
 void add(int l, int r, long long x) {
@@ -101,11 +112,11 @@ void add(int l, int r, long long x, segment *seg) {
 			seg->minValue = seg->value;
 		} else { //else go deeper
 
-			add(l, r, x, seg->segl);
-			add(l, r, x, seg->segr);
+			add(l, r, x, seg->nodel);
+			add(l, r, x, seg->noder);
 
-			seg->minValue = seg->segl->minValue < seg->segr->minValue ? seg->segl->minValue : seg->segr->minValue;
-			seg->value = seg->segl->value + seg->segr->value;
+			seg->minValue = seg->nodel->minValue < seg->noder->minValue ? seg->nodel->minValue : seg->noder->minValue;
+			seg->value = seg->nodel->value + seg->noder->value;
 		}
 	}
 	
@@ -126,15 +137,15 @@ void set_range(int l, int r, long long x, segment *seg) {
 			} else { //else go deeper
 				seg->value = 2*x;
 				seg->minValue = x;
-				set_range(l, r, x, seg->segl);
-				set_range(l, r, x, seg->segr);
+				set_range(l, r, x, seg->nodel);
+				set_range(l, r, x, seg->noder);
 			}
 
 		} else { //else go deeper
-			set_range(l, r, x, seg->segl);
-			set_range(l, r, x, seg->segr);
-			seg->minValue = seg->segl->minValue < seg->segr->minValue ? seg->segl->minValue : seg->segr->minValue;
-			seg->value = seg->segl->value + seg->segr->value;
+			set_range(l, r, x, seg->nodel);
+			set_range(l, r, x, seg->noder);
+			seg->minValue = seg->nodel->minValue < seg->noder->minValue ? seg->nodel->minValue : seg->noder->minValue;
+			seg->value = seg->nodel->value + seg->noder->value;
 		}
 	}
 }
@@ -151,8 +162,8 @@ long long get_min(int l, int r, segment *seg) {
 		return INT32_MAX;
 
 	//Continue to go deeper
-	int minValueL = get_min(l, r, seg->segl);
-	int minValueR = get_min(l, r, seg->segr);
+	int minValueL = get_min(l, r, seg->nodel);
+	int minValueR = get_min(l, r, seg->noder);
 	return minValueL < minValueR ? minValueL : minValueR;
 }
 
@@ -168,10 +179,10 @@ int lower_bound(int l, int r, long long x, segment *seg) {
 		return seg->xl;
 	
 	int ret;
-	if(seg->segl->minValue < x && (ret = lower_bound(l, r, x, seg->segl)) >= 0 ) //if left segment is correct
+	if(seg->nodel->minValue < x && (ret = lower_bound(l, r, x, seg->nodel)) >= 0 ) //if left segment is correct
 		return ret;
 	else
-		return seg->segr->minValue < x ? lower_bound(l, r, x, seg->segr) : -1;
+		return seg->noder->minValue < x ? lower_bound(l, r, x, seg->noder) : -1;
 
 }
 
