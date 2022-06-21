@@ -51,7 +51,7 @@ void init(std::vector<long long> a) {
 	}
 
 	if (newLevel.size() % 2) { //if odd  number of nodes in this level, add empty node
-		node_t node_t = {nullptr, nullptr, dataSize, dataSize, 0, INT32_MAX};
+		node_t node_t = {nullptr, nullptr, dataSize, dataSize, 0, __LONG_LONG_MAX__};
 		newLevel.push_back(node_t);
 	}
 	
@@ -68,7 +68,7 @@ void init(std::vector<long long> a) {
 		}
 		
 		if (newLevel.size() % 2 && tree[0].size() > 2) { //if odd  number of nodes in this level, add empty node
-			node_t node = {nullptr, nullptr, -1, -1, 0, INT32_MAX};
+			node_t node = {nullptr, nullptr, -1, -1, 0, __LONG_LONG_MAX__};
 			newLevel.push_back(node);
 		}
 		// printf("Debugpoint");
@@ -148,7 +148,7 @@ long long get_min(int l, int r, node_t *node) {
 		return node->minValue;
 
 	if (l > node->xr || r <= node->xl) //if completely outside, return 0
-		return INT32_MAX;
+		return __LONG_LONG_MAX__;
 
 	//Continue to go deeper
 	int minValueL = get_min(l, r, node->nodel);
