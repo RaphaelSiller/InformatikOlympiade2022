@@ -267,7 +267,7 @@ long long getMinUtil(int ss, int se, int qs, int qe, int si)
  
     // Out of range
     if (ss > se || ss > qe || se < qs)
-        return 0;
+        return __LONG_LONG_MAX__;
  
     // At this point, we are sure that pending lazy updates
     // are done for current node. So we can return value
